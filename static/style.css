@@ -14,6 +14,7 @@ header {
     margin-bottom: 20px;
 }
 header h1 { margin: 0 0 8px; }
+header .subtitulo { margin: 0; opacity: .9; font-size: 18px; }
 .card {
     background: white;
     padding: 24px;
@@ -21,65 +22,9 @@ header h1 { margin: 0 0 8px; }
     margin-bottom: 20px;
     box-shadow: 0 4px 18px rgba(0,0,0,.07);
 }
-input, textarea, select {
-    width: 100%;
-    padding: 12px;
-    margin: 7px 0;
-    border: 1px solid #ccd3da;
-    border-radius: 8px;
-}
-textarea { min-height: 90px; resize: vertical; }
-button {
-    border: 0;
-    border-radius: 8px;
-    padding: 10px 15px;
-    cursor: pointer;
-    background: #1f6feb;
-    color: white;
-    margin-top: 8px;
-}
-button.danger { background: #d93025; }
-.lista { display: grid; gap: 12px; }
-.tarefa {
-    display: flex;
-    justify-content: space-between;
-    gap: 15px;
-    padding: 16px;
-    border: 1px solid #e0e5ea;
-    border-radius: 12px;
-}
-.tarefa h3 { margin: 0 0 5px; }
-.tarefa p { margin: 5px 0 10px; color: #5f6b76; }
-.tarefa.concluida { opacity: .65; }
-.tarefa.concluida h3 { text-decoration: line-through; }
-.badge {
-    display: inline-block;
-    padding: 4px 8px;
-    border-radius: 20px;
-    background: #e8f0fe;
-    font-size: 12px;
-}
-.acoes { display: flex; gap: 6px; align-items: flex-start; }
-@media (max-width: 650px) {
-    .tarefa { flex-direction: column; }
-}
-header .subtitulo { margin: 0; opacity: .9; font-size: 18px; }
 .conteudo p {
     margin: 0 0 16px;
     line-height: 1.7;
     color: #3d4852;
 }
-.link-voltar {
-    display: inline-block;
-    margin-top: 8px;
-    color: #1f6feb;
-    text-decoration: none;
-    font-weight: bold;
-}
-.link-voltar:hover { text-decoration: underline; }
-.link-header {
-    color: white;
-    text-decoration: none;
-    font-size: 14px;
-    border-bottom: 1px solid rgba(255,255,255,.6);
-}
+.conteudo p:last-child { margin-bottom: 0; }
