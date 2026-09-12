@@ -40,6 +40,10 @@ def index():
     conn.close()
     return render_template("index.html", tarefas=tarefas)
 
+@app.route("/sobre")
+def sobre():
+    return render_template("sobre.html")
+
 @app.route("/adicionar", methods=["POST"])
 def adicionar():
     titulo = request.form["titulo"].strip()

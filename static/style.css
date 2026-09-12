@@ -63,3 +63,23 @@ button.danger { background: #d93025; }
 @media (max-width: 650px) {
     .tarefa { flex-direction: column; }
 }
+header .subtitulo { margin: 0; opacity: .9; font-size: 18px; }
+.conteudo p {
+    margin: 0 0 16px;
+    line-height: 1.7;
+    color: #3d4852;
+}
+.link-voltar {
+    display: inline-block;
+    margin-top: 8px;
+    color: #1f6feb;
+    text-decoration: none;
+    font-weight: bold;
+}
+.link-voltar:hover { text-decoration: underline; }
+.link-header {
+    color: white;
+    text-decoration: none;
+    font-size: 14px;
+    border-bottom: 1px solid rgba(255,255,255,.6);
+}
