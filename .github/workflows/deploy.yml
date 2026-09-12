@@ -1,45 +1,39 @@
-name: Build e Deploy no Azure
+name: Build and deploy container
 
 on:
   push:
-    branches: [ "main" ]
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  id-token: write
+  contents: read
 
 env:
-  IMAGE_NAME: tarefa-app
+  ACR_NAME: acraula12321
+  IMAGE: minha-app
+  RG: rg-python-aula
+  WEBAPP: webapp-aula12321
 
 jobs:
-  build-and-deploy:
+  deploy:
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout do código
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
-      - name: Login no Azure
-        uses: azure/login@v2
+      - uses: azure/login@v2
         with:
-          creds: ${{ secrets.AZURE_CREDENTIALS }}
+          client-id: ${{ secrets.AZURE_CLIENT_ID }}
+          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
 
-      - name: Login no ACR
-        run: az acr login --name ${{ secrets.ACR_NAME }}
-
-      - name: Build da imagem
+      - name: Build image in ACR
         run: |
-          docker build -t ${{ secrets.ACR_NAME }}.azurecr.io/${{ env.IMAGE_NAME }}:${{ github.sha }} .
+          az acr build --registry $ACR_NAME \
+            --image $IMAGE:${{ github.sha }} \
+            --image $IMAGE:latest .
 
-      - name: Push da imagem para o ACR
+      - name: Point Web App at the new image
         run: |
-          docker push ${{ secrets.ACR_NAME }}.azurecr.io/${{ env.IMAGE_NAME }}:${{ github.sha }}
-
-      - name: Configurar imagem no Web App
-        run: |
-          az webapp config container set \
-            --resource-group ${{ secrets.RESOURCE_GROUP }} \
-            --name ${{ secrets.WEBAPP_NAME }} \
-            --docker-custom-image-name ${{ secrets.ACR_NAME }}.azurecr.io/${{ env.IMAGE_NAME }}:${{ github.sha }}
-
-      - name: Reiniciar Web App
-        run: |
-          az webapp restart \
-            --resource-group ${{ secrets.RESOURCE_GROUP }} \
-            --name ${{ secrets.WEBAPP_NAME }}
+          az webapp config container set -g $RG -n $WEBAPP \
+            --container-image-name $ACR_NAME.azurecr.io/$IMAGE:${{ github.sha }}
